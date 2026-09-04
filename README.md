@@ -1,82 +1,70 @@
 # 🩺 Chest X-Ray Disease Classification using EfficientNet-B0
 
-![Python](https://img.shields.io/badge/Python-3.10-blue)
-![PyTorch](https://img.shields.io/badge/PyTorch-DeepLearning-red)
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![PyTorch](https://img.shields.io/badge/PyTorch-Deep%20Learning-red)
 ![EfficientNet](https://img.shields.io/badge/Model-EfficientNet--B0-orange)
-![Streamlit](https://img.shields.io/badge/Streamlit-WebApp-FF4B4B)
 ![Grad-CAM](https://img.shields.io/badge/XAI-Grad--CAM-purple)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+![Streamlit](https://img.shields.io/badge/Streamlit-Web%20App-FF4B4B)
 
-A deep learning-based chest X-ray classification system that uses **EfficientNet-B0** with transfer learning to classify X-ray images into **COVID-19, Pneumonia, or Tuberculosis**. The project also uses **Grad-CAM** to visualize the regions that influenced the model's prediction and provides an interactive **Streamlit web application** for inference.
+A deep learning-based chest X-ray classification system that uses **EfficientNet-B0** with transfer learning to classify X-ray images into **COVID-19, Pneumonia, or Tuberculosis**.
+
+The project also uses **Grad-CAM** to visualize image regions that contributed to the model's prediction and provides an interactive **Streamlit web application** for inference.
+
+---
+
+## 🚀 Live Demo
+
+Try the deployed application:
+
+**[Open Chest X-Ray Disease Classification App](https://chest-xray-disease-classification-bzxyec9xdqkpqtsszkkwne.streamlit.app/)**
+
+---
+
+## 🤗 Model Weights
+
+The trained EfficientNet-B0 checkpoint is hosted separately on Hugging Face because large model files are excluded from the GitHub repository.
+
+**[View the EfficientNet-B0 Model on Hugging Face](https://huggingface.co/Sharif-Mahammad/chest-xray-efficientnet-b0)**
+
+The Streamlit application automatically downloads the model from Hugging Face when the local checkpoint is not available.
 
 ---
 
 ## 📌 Overview
 
-This project demonstrates an end-to-end deep learning pipeline for classifying chest X-ray images into three disease categories:
+This project implements an end-to-end deep learning pipeline for chest X-ray image classification.
+
+The model predicts one of three classes:
 
 - 🦠 COVID-19
 - 🫁 Pneumonia
 - 🩻 Tuberculosis
 
-The system uses **EfficientNet-B0**, a pretrained convolutional neural network, through transfer learning. The pretrained model is adapted to classify the three target classes.
+The system combines:
 
-To improve interpretability, **Grad-CAM (Gradient-weighted Class Activation Mapping)** is used to generate a heatmap highlighting the regions that contributed to the model's prediction.
+- **EfficientNet-B0** for image classification
+- **Transfer learning** using ImageNet-pretrained weights
+- **Grad-CAM** for visual explainability
+- **Streamlit** for interactive deployment
 
-The project also includes a **Streamlit web application** where users can upload a chest X-ray and view the predicted class, confidence score, class probabilities, and Grad-CAM visualization.
+> **Important:** This is a **single-class classification** system. Each X-ray receives one predicted class with the highest model probability. It is not a multi-label system capable of simultaneously predicting multiple diseases.
 
 ---
 
-## ✨ Key Highlights
+## ✨ Key Features
 
 - ✅ Three-class chest X-ray classification
 - ✅ EfficientNet-B0 transfer learning
 - ✅ Image preprocessing and augmentation
-- ✅ Early stopping
 - ✅ AdamW optimizer
 - ✅ Cosine Annealing learning-rate scheduler
-- ✅ Label smoothing
+- ✅ Cross-entropy loss with label smoothing
+- ✅ Early stopping
 - ✅ Grad-CAM explainability
-- ✅ Prediction confidence and probabilities
+- ✅ Prediction confidence and class probabilities
 - ✅ Interactive Streamlit web application
-- ✅ GPU-supported training using PyTorch
-
----
-
-## 🚀 Features
-
-### 🔍 Disease Classification
-
-The trained model classifies a chest X-ray into one of the following classes:
-
-```text
-COVID-19
-Pneumonia
-Tuberculosis
-```
-
-### 🧠 Transfer Learning
-
-The project uses **EfficientNet-B0 pretrained on ImageNet**.
-
-The final classification layer is modified to predict the three target classes.
-
-### 🔥 Grad-CAM Visualization
-
-Grad-CAM is used to generate a visual explanation of the model's prediction.
-
-The generated heatmap highlights image regions that contributed to the predicted class.
-
-### 🌐 Streamlit Web Application
-
-The Streamlit application allows users to:
-
-1. Upload a chest X-ray image
-2. Run the trained EfficientNet-B0 model
-3. View the predicted disease
-4. View prediction confidence
-5. View class probabilities
-6. View Grad-CAM visualization
+- ✅ GPU-supported training with PyTorch
+- ✅ Hugging Face model hosting for deployment
 
 ---
 
@@ -93,24 +81,23 @@ The Streamlit application allows users to:
                            │
                            ▼
                     EfficientNet-B0
-                  Transfer Learning
+                    Transfer Learning
                            │
                            ▼
                      Classification
                            │
-                           ▼
-             ┌─────────────┼─────────────┐
-             ▼             ▼             ▼
-          COVID-19      Pneumonia    Tuberculosis
+              ┌────────────┼────────────┐
+              ▼            ▼            ▼
+          COVID-19      Pneumonia   Tuberculosis
                            │
                            ▼
                         Grad-CAM
                            │
                            ▼
-                  Explainable Heatmap
+                   Explainable Heatmap
                            │
                            ▼
-                   Streamlit Web App
+                    Streamlit Web App
 ```
 
 ---
@@ -119,29 +106,6 @@ The Streamlit application allows users to:
 
 ```text
 Chest-XRay-Disease-Classification/
-│
-├── dataset/
-│   ├── train/
-│   │   ├── COVID19/
-│   │   ├── PNEUMONIA/
-│   │   └── TURBERCULOSIS/
-│   │
-│   ├── val/
-│   │   ├── COVID19/
-│   │   ├── PNEUMONIA/
-│   │   └── TURBERCULOSIS/
-│   │
-│   └── test/
-│       ├── COVID19/
-│       ├── PNEUMONIA/
-│       └── TURBERCULOSIS/
-│
-├── outputs/
-│   ├── efficientnet_b0_best.pt
-│   ├── efficientnet_b0_classification_report.json
-│   ├── model_comparison.csv
-│   ├── model_comparison.json
-│   └── gradcam_test.png
 │
 ├── app.py
 ├── gradcam.py
@@ -152,51 +116,37 @@ Chest-XRay-Disease-Classification/
 └── README.md
 ```
 
-> **Note:** The dataset and trained model checkpoint are excluded from GitHub because of their large file sizes.
+### Local-only directories
+
+The following directories are intentionally excluded from GitHub because they contain large datasets or generated model/output files:
+
+```text
+dataset/
+outputs/
+```
+
+The trained model checkpoint is hosted on Hugging Face.
 
 ---
 
 ## 📊 Dataset
 
-The project uses a chest X-ray dataset containing images belonging to three classes:
+The project uses the **Chest X-Ray (Pneumonia, Covid-19, Tuberculosis)** dataset.
 
-- COVID-19
-- Pneumonia
-- Tuberculosis
+Dataset source:
 
-The dataset is organized into training, validation, and testing splits.
+**Kaggle:**  
+https://www.kaggle.com/datasets/jtiptj/chest-xray-pneumoniacovid19tuberculosis
+
+The project uses the following three classes:
 
 ```text
-dataset/
-│
-├── train/
-├── val/
-└── test/
+COVID19
+PNEUMONIA
+TURBERCULOSIS
 ```
 
-Each split contains the three target classes.
-
-### Dataset Source
-
-The dataset used in this project is:
-
-**Chest X-Ray (Pneumonia, Covid-19, Tuberculosis)**
-
-The dataset is used for educational and research purposes.
-
----
-
-## 🧹 Data Preparation
-
-The `prepare_data.py` script prepares the required three-class dataset structure.
-
-Run:
-
-```bash
-python prepare_data.py
-```
-
-The resulting dataset structure is:
+The dataset is prepared into training, validation, and testing splits.
 
 ```text
 dataset/
@@ -219,32 +169,46 @@ dataset/
 
 ---
 
+## 🧹 Data Preparation
+
+The `prepare_data.py` script creates the required three-class dataset structure.
+
+Run:
+
+```bash
+python prepare_data.py
+```
+
+The dataset and generated files are excluded from GitHub using `.gitignore`.
+
+---
+
 ## 🧠 Model
 
 ### EfficientNet-B0
 
-This project uses **EfficientNet-B0** as the final deep learning model.
+The final model used in this project is **EfficientNet-B0**.
 
-The model is initialized with pretrained ImageNet weights and fine-tuned for the three-class chest X-ray classification task.
+It starts with ImageNet-pretrained weights and is adapted for the three-class chest X-ray classification task.
 
 ```text
-                    Input Image
-                         │
-                         ▼
-                  EfficientNet-B0
-                         │
-                         ▼
-                  Feature Extraction
-                         │
-                         ▼
-                 Classification Layer
-                         │
-                         ▼
-                    3-Class Output
-                         │
-            ┌────────────┼────────────┐
-            ▼            ▼            ▼
-         COVID-19    Pneumonia   Tuberculosis
+Input X-Ray
+     │
+     ▼
+EfficientNet-B0
+     │
+     ▼
+Feature Extraction
+     │
+     ▼
+Classification Layer
+     │
+     ▼
+3-Class Output
+     │
+ ┌───┼──────────────┐
+ ▼   ▼              ▼
+COVID  Pneumonia  Tuberculosis
 ```
 
 ### Training Configuration
@@ -258,16 +222,15 @@ The model is initialized with pretrained ImageNet weights and fine-tuned for the
 | Batch Size | 32 |
 | Scheduler | Cosine Annealing |
 | Loss | Cross Entropy with Label Smoothing |
-| Early Stopping | Enabled |
 | Pretrained Weights | ImageNet |
 
 ---
 
 ## 🔥 Explainable AI — Grad-CAM
 
-The project uses **Grad-CAM (Gradient-weighted Class Activation Mapping)** to provide a visual explanation of the model's prediction.
+**Grad-CAM (Gradient-weighted Class Activation Mapping)** is used to provide a visual explanation of the model's prediction.
 
-Grad-CAM generates a heatmap showing the regions of the X-ray image that contributed most to the predicted class.
+It generates a heatmap showing image regions that contributed more strongly to the predicted class.
 
 ### Grad-CAM Workflow
 
@@ -293,13 +256,13 @@ Heatmap Generation
 X-Ray + Heatmap
 ```
 
-This provides an additional layer of interpretability to the classification result.
+Grad-CAM helps make the model's prediction more interpretable by showing where the model focused when producing its result.
 
 ---
 
 ## 🌐 Streamlit Web Application
 
-The project includes a Streamlit-based web application for interactive inference.
+The project includes an interactive Streamlit application.
 
 ### Application Workflow
 
@@ -315,7 +278,7 @@ EfficientNet-B0
      ▼
 Prediction
      │
-     ├── Predicted Disease
+     ├── Predicted Condition
      ├── Confidence Score
      └── Class Probabilities
      │
@@ -323,19 +286,64 @@ Prediction
 Grad-CAM Visualization
 ```
 
-### Run the Application
+The application allows users to:
 
-```bash
-python -m streamlit run app.py
+1. Upload a chest X-ray image
+2. Run the trained EfficientNet-B0 model
+3. View the predicted condition
+4. View prediction confidence
+5. View probabilities for all three classes
+6. View the Grad-CAM visualization
+
+---
+
+## 📈 Model Performance
+
+EfficientNet-B0 was evaluated on the prepared test split.
+
+| Metric | Result |
+|---|---:|
+| Test Accuracy | 100% |
+| Test Images | 537 |
+
+The reported result is based on the provided dataset and test split.
+
+> ⚠️ **Important:** The reported performance should not be interpreted as clinical diagnostic accuracy or medical validation. Results on external, unseen, or real-world clinical data may differ.
+
+---
+
+## ⚠️ Classification Behavior
+
+This project performs **single-class classification**, not multi-label disease detection.
+
+For every uploaded X-ray, the model selects the class with the highest predicted probability:
+
+```text
+COVID-19
+Pneumonia
+Tuberculosis
 ```
 
-The application provides:
+If an X-ray contains visual characteristics associated with more than one condition, the current model will still return **one predicted class**.
 
-- 📤 X-ray image upload
-- 🧠 Disease prediction
-- 📊 Prediction confidence
-- 📈 Class probability distribution
-- 🔥 Grad-CAM visualization
+The system does not currently support outputs such as:
+
+```text
+COVID-19 + Pneumonia
+```
+
+True multi-label classification would require suitable multi-label dataset annotations, a different output design, an appropriate loss function, and retraining.
+
+---
+
+## 📸 Sample Grad-CAM Output
+
+The application generates a Grad-CAM heatmap over the uploaded chest X-ray to provide an interpretable visualization of the prediction.
+
+
+```markdown
+![Grad-CAM Output](images/gradcam_test.png)
+```
 
 ---
 
@@ -347,7 +355,7 @@ The application provides:
 git clone https://github.com/Sharif-Mahammad/Chest-XRay-Disease-Classification.git
 ```
 
-### 2. Navigate to the Project Directory
+### 2. Navigate to the Project
 
 ```bash
 cd Chest-XRay-Disease-Classification
@@ -365,6 +373,8 @@ pip install -r requirements.txt
 
 ### Step 1 — Prepare the Dataset
 
+After downloading and placing the source dataset in the expected location:
+
 ```bash
 python prepare_data.py
 ```
@@ -375,10 +385,16 @@ python prepare_data.py
 python train_compare.py --models efficientnet_b0
 ```
 
-For a quick five-epoch training run:
+For the five-epoch training run used during development:
 
 ```bash
 python train_compare.py --models efficientnet_b0 --epochs 5 --batch-size 32 --num-workers 2
+```
+
+The trained checkpoint is saved locally as:
+
+```text
+outputs/efficientnet_b0_best.pt
 ```
 
 ### Step 3 — Generate Grad-CAM
@@ -401,103 +417,6 @@ python -m streamlit run app.py
 
 ---
 
-## 📈 Model Performance
-
-EfficientNet-B0 was trained and evaluated using the prepared three-class chest X-ray dataset.
-
-The trained model achieved the following result on the provided test split:
-
-| Metric | Score |
-|---|---:|
-| Test Accuracy | 100% |
-| Test Images | 537 |
-
-The evaluation was performed using the best validation checkpoint.
-
-> ⚠️ The reported performance is specific to the provided dataset and test split. It should **not** be interpreted as clinical diagnostic accuracy or medical validation. Performance on external or real-world clinical data may differ.
-
----
-
-## 📁 Output Files
-
-After training, the project generates output files inside the `outputs/` directory.
-
-```text
-outputs/
-│
-├── efficientnet_b0_best.pt
-├── efficientnet_b0_classification_report.json
-├── model_comparison.csv
-├── model_comparison.json
-└── gradcam_test.png
-```
-
-### Model Checkpoint
-
-```text
-efficientnet_b0_best.pt
-```
-
-Contains the trained EfficientNet-B0 model weights and configuration.
-
-### Classification Report
-
-```text
-efficientnet_b0_classification_report.json
-```
-
-Contains classification metrics generated during model evaluation.
-
-### Grad-CAM Output
-
-```text
-gradcam_test.png
-```
-
-Contains a Grad-CAM visualization for a test X-ray image.
-
----
-
-## ⚠️ Classification Behavior
-
-This project performs **single-class classification**, not multi-label disease detection.
-
-For each uploaded chest X-ray, the model selects the class with the highest predicted probability:
-
-```text
-COVID-19
-Pneumonia
-Tuberculosis
-```
-
-For example, if an X-ray contains visual characteristics associated with more than one condition, the model will still return **one predicted class** based on the highest model probability.
-
-The current system does not support simultaneous predictions such as:
-
-```text
-COVID-19 + Pneumonia
-```
-
-True multi-label classification would require a different dataset labeling strategy, model output design, loss function, and training process.
-
----
-
-## 📸 Sample Outputs
-
-### 🔥 Grad-CAM
-
-The project generates a Grad-CAM heatmap over the chest X-ray.
-
-The generated output can be viewed from:
-
-```text
-outputs/gradcam_test.png
-```
-
-![Grad-CAM Output](outputs/gradcam_test.png)
-
----
-
 ## 🛠️ Tech Stack
 
 | Category | Technology |
@@ -511,48 +430,8 @@ outputs/gradcam_test.png
 | Visualization | Matplotlib |
 | Web Application | Streamlit |
 | Model Evaluation | Scikit-learn |
+| Model Hosting | Hugging Face |
 | Version Control | Git & GitHub |
-
----
-
-## 📌 Complete Project Workflow
-
-```text
-                Dataset
-                   │
-                   ▼
-            Data Preparation
-                   │
-                   ▼
-          Image Preprocessing
-                   │
-                   ▼
-           Data Augmentation
-                   │
-                   ▼
-            EfficientNet-B0
-                   │
-                   ▼
-             Model Training
-                   │
-                   ▼
-              Validation
-                   │
-                   ▼
-        Best Model Checkpoint
-                   │
-                   ▼
-            Test Evaluation
-                   │
-                   ▼
-             Grad-CAM
-                   │
-                   ▼
-        Explainable Prediction
-                   │
-                   ▼
-          Streamlit Web App
-```
 
 ---
 
@@ -566,18 +445,17 @@ outputs/gradcam_test.png
 - 🔹 Model quantization
 - 🔹 ONNX deployment
 - 🔹 FastAPI inference API
-- 🔹 Cloud deployment
 - 🔹 Improved model monitoring
 
 ---
 
-## ⚠️ Disclaimer
+## ⚠️ Medical Disclaimer
 
 This project is developed for **educational and research purposes only**.
 
-It is not intended to replace professional medical diagnosis, clinical evaluation, or medical advice.
+It is **not a medical diagnostic tool** and should not be used as a substitute for professional medical advice, clinical evaluation, or diagnosis.
 
-Predictions generated by this model should not be used to make healthcare decisions.
+Predictions generated by this application should not be used to make healthcare decisions.
 
 ---
 
@@ -591,10 +469,10 @@ Predictions generated by this model should not be used to make healthcare decisi
 
 ## 📄 License
 
-This project is licensed under the **MIT License**.
+License information is currently **not specified** for this repository.
 
-See the `LICENSE` file for more information.
+If this project is distributed publicly, appropriate licensing and attribution should be added based on the permissions and licensing terms of the source code and dataset.
 
 ---
 
-⭐ If you found this project useful, consider giving it a star!
+⭐ If you found this project useful, consider giving the repository a star!
