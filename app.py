@@ -4,8 +4,10 @@ import torch.nn.functional as F
 import numpy as np
 import matplotlib.pyplot as plt
 
+from pathlib import Path
 from PIL import Image
 from torchvision import transforms
+from huggingface_hub import hf_hub_download
 
 from train_compare import build_model
 
@@ -27,6 +29,9 @@ st.set_page_config(
 
 MODEL_PATH = "outputs/efficientnet_b0_best.pt"
 
+HF_REPO_ID = "Sharif-Mahammad/chest-xray-efficientnet-b0"
+HF_MODEL_FILE = "efficientnet_b0_best.pt"
+
 DISPLAY_NAME_MAP = {
     "COVID19": "COVID-19",
     "PNEUMONIA": "Pneumonia",
@@ -41,8 +46,16 @@ DISPLAY_NAME_MAP = {
 @st.cache_resource
 def load_model():
 
+    model_path = MODEL_PATH
+
+    if not Path(model_path).exists():
+        model_path = hf_hub_download(
+            repo_id=HF_REPO_ID,
+            filename=HF_MODEL_FILE
+        )
+
     checkpoint = torch.load(
-        MODEL_PATH,
+        model_path,
         map_location="cpu"
     )
 
