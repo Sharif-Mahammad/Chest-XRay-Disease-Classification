@@ -1,8 +1,10 @@
-
-raw_dataset/
 raw_dataset/
 dataset/
 outputs/
+
+__pycache__/
+*.pyc
+
 *.pt
 *.pth
 *.zip
